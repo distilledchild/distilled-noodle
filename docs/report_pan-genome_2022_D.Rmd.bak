@@ -1,0 +1,175 @@
+---
+title: "Pangenome 2022_D"
+author: "Panjun Kim"
+date: "`r format(Sys.time(), '%B %d, %Y')` "
+output: 
+  html_document:
+    df_print: paged
+    highlight: pygments
+    theme: flatly
+editor_option:
+  markdown:
+    wrap: 72
+params:
+  report_name: Checkigng complexity and picking markers in Pangenome project
+  content: Complexity of markers using sequence complexity R library and reporting markers selected
+  start: '2023-1-4'
+  end: '2023-1-10'
+  show_code: no
+---
+
+```{r rmd-setup, include = FALSE}
+options(knitr.duplicate.label = 'allow')
+knitr::opts_chunk$set(echo = TRUE, comment = NA, tidy = TRUE, message = FALSE, warning = FALSE, error = FALSE)
+knitr::opts_knit$set(root.dir = "/home/panjun/Dropbox/Gateway_to_Hao/pangenome.windows.10142022/2022_D")
+```
+
+```{r setup, include = FALSE}
+library(tidyverse) 
+library(fs)
+library(ggplot2)
+
+source(file.path('/home/panjun/Dropbox/Gateway_to_Hao', '/project_common_code/variables.R'))
+source(file.path(root.ubuntu.dir, 'Gateway_to_Hao/project_common_code/funcs.R'))
+file.path(root.ubuntu.dir, pange.project.2022.d.dir)
+setwd(file.path(root.ubuntu.dir, pange.project.2022.d.dir))
+getwd()
+```
+
+<!-- being able to use params in r code chunk -->
+
+### This report is **`r params$report_name`** that consists of **`r str_c(params$content, collapse = ", ")`** over the time period from **`r params$start`** to **`r params$end`**.
+
+## 01. Runing GATK for variant calling
+
+### 01-01. Converting marker sequence to XStringSet for sequence_complexity()
+
+```{r 01-converting-marker-sequence-to-XStringSet-for-sequence_complexity}
+library(universalmotif)
+library(Biostrings)
+library(formatR)
+
+df.2022_D.pange.500.targets <- read_file(file.path(root.ubuntu.dir, pange.project.2022.d.dir, "pangenome_variant_validation_2022_12_20_500targets.fasta")) %>% 
+  as_tibble() %>% 
+  separate_rows(value, sep = '>', convert=TRUE) %>%
+  dplyr::slice(-1) %>% 
+  separate(value, c('name', 'sequence'), sep = '\n', convert=TRUE, remove=TRUE) %>%
+  mutate(name = str_trim(name, side = c("both")), sequence = str_trim(sequence, side = c("both"))) %>%
+  view()
+
+column_names <- colnames(df.2022_D.pange.500.targets)
+  
+for(cname in column_names) {
+  assign(cname, df.2022_D.pange.500.targets[[cname]])
+}
+  
+names(sequence) <- name
+DNAStringSet.2022D.500.markers <- DNAStringSet(sequence)
+
+# slotNames(DNAStringSet.2022D.500.markers)
+
+# 'WoottonFederhen', WoottonFederhenFast, Trifonov, TrifonovFast, DUST
+# Average length of primers in previous work : 22(21.53636364)
+df.sequence_complexity.2022D.WF <- 
+  sequence_complexity(DNAStringSet.2022D.500.markers, window.size = 22, window.overlap = 21, return.granges = TRUE, method = "WoottonFederhen") %>% 
+  as_tibble() %>% 
+  write_csv('2022D.seq_complexity.WF.csv') %>%
+  view() 
+?sequence_complexity()
+# histogram data: data
+histo.df.sequence_complexity.2022D.WF <- df.sequence_complexity.2022D.WF %>% 
+  filter(!between(end, 150, (150 + 22))) %>% 
+  group_by(seqnames) %>% 
+  summarise(ave = mean(complexity)) %>% 
+  view()
+
+# histogram data: plot
+histo.df.sequence_complexity.2022D.WF %>% 
+ggplot(aes(x=ave))+
+  geom_histogram(fill='#DD8888', col='#993333', binwidth=.01, alpha=0.4)+
+  labs(title = "Distribution of Complexity Average for Markers")+
+  scale_x_continuous(breaks = seq(0.4, 0.9, by = .1)) +
+  scale_y_continuous(breaks = seq(0, 60, by = 5)) +
+  ylab ("Count")+
+  xlab("Probability")+
+  theme(axis.title.y = element_text(color="#993333", size=13, face="bold"))+
+  theme(axis.title.x = element_text(color="#993333", size=13, face="bold"))+
+  theme(plot.title = element_text(color="Dark Red", size=14, face="bold", hjust = 0.5))+
+  theme(axis.text.x = element_text(color = "dark red", size = 9, face ="bold"))
+```
+
+## 02. picking top 10% markers  
+
+```{r 02-picking-top-10pct-markers}
+df.candidate100.markers.2022D.WF <- 
+  histo.df.sequence_complexity.2022D.WF %>% 
+  arrange(desc(ave)) %>% 
+  top_n(100) %>% 
+  view()
+
+# 50 random pick
+
+random_50_integers <- sample(1:100, 50, replace = FALSE, set.seed(123))
+
+# checking 50 integers
+print(random_50_integers)
+
+boxplot.candidate100.markers.2022D.WF <- 
+  df.candidate100.markers.2022D.WF %>% 
+  mutate(grp = if_else(as.numeric(rownames(.)) %in% random_50_integers, "random_50_markers", "top_100_markers")) %>% 
+  view()
+
+level_order <- c('all', 'top_100_markers', 'random_50_markers')
+
+my_quantile <- function(x, probs) {
+  tibble(qt = quantile(x, probs), probs = probs)
+}
+
+tbl.df.sequence_complexity.2022D.WF <- histo.df.sequence_complexity.2022D.WF %>% 
+  mutate(grp = "all") %>% 
+  bind_rows(boxplot.candidate100.markers.2022D.WF) %>% 
+  group_by(grp) %>% 
+  summarise(my_quantile(ave, c(0.25, 0.5, 0.90))) %>% 
+  ungroup(grp) %>% 
+  spread(probs, qt) %>% 
+  mutate_if(is.numeric, round, digits = 3) %>% 
+  view()
+
+print(tbl.df.sequence_complexity.2022D.WF)
+
+histo.df.sequence_complexity.2022D.WF %>% 
+  mutate(grp = "all") %>% 
+  bind_rows(boxplot.candidate100.markers.2022D.WF) %>% 
+  ggplot(aes(x = factor(grp, level=level_order), y = ave)) +
+  geom_boxplot(color = "#993333" , fill = "#DD8888", alpha=0.4) +
+  labs(x = "Marekrs on Step", y = "Complexity") +
+  labs(title = "Comparing Marker Complexity between All, Top 100 and Random 50 Markers ")+
+  theme(plot.title = element_text(color="Dark Red", size=11, face="bold", hjust = 0.5)) +
+  stat_summary(fun.y=mean, geom="point", shape=20, size=3, color="red", fill="red") +
+  theme(axis.title.y = element_text(color="#993333", size=13, face="bold"))+
+  theme(axis.title.x = element_text(color="#993333", size=13, face="bold"))
+
+
+```
+## 03. Generating fasta files for 50 markers
+
+```{r 03-generating-fasta-files-for-50markers}
+# generating fasta file
+boxplot.candidate100.markers.2022D.WF %>% 
+  left_join(df.2022_D.pange.500.targets, by = c("seqnames" = "name")) %>% 
+  filter(str_detect(grp, '50')) %>% 
+  select(-c(ave, grp)) %>% 
+  select(-sequence) %>% 
+  write.table('./top_random_50_marker_2022_D_list_only.fa', append = FALSE, quote = FALSE, col.names = F, row.names = F) %>% 
+  view()
+  unite(tmp, remove = TRUE) %>% 
+  separate_rows(tmp, sep = '_', convert=TRUE) %>%
+  mutate(fasta = if_else(str_detect(tmp, 'chr'), str_c(">", tmp), tmp)) %>% 
+  select(-tmp) %>% 
+  write.table('./top_random_50_marker_2022_D.fa', append = FALSE, quote = FALSE, col.names = F, row.names = F) %>% 
+  view()
+
+```
+```{r generating-r-files, include=FALSE}
+knitr::purl('./2022_D.Rmd', output = './2022_D.R', quiet = TRUE)
+```

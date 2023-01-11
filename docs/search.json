@@ -3,17 +3,81 @@
     {
       "path": "about.html",
       "title": "About this site",
-      "description": "Some additional details about the website",
       "author": [],
-      "contents": "\n\n\n\n",
-      "last_modified": "2023-01-07T01:53:25-06:00"
+      "contents": "\ndate: “2023-01-11”\noutput: distill::distill_article\nReference\nhttps://github.com/seankross/postcards\nVideo\n\n\n\n\n\n",
+      "last_modified": "2023-01-11T03:16:15-06:00"
+    },
+    {
+      "path": "blog.html",
+      "title": "Blog",
+      "description": "A new article created using the Distill format.\n",
+      "author": [
+        {
+          "name": "P Kim",
+          "url": "https://example.com/norajones"
+        }
+      ],
+      "date": "`r Sys.Date()`",
+      "contents": "\nDistill is a publication format for scientific and technical writing, native to the web.\nLearn more about using Distill for R Markdown at https://rstudio.github.io/distill.\n\n\n\n",
+      "last_modified": "2023-01-11T03:16:16-06:00"
+    },
+    {
+      "path": "contact.html",
+      "title": "Contact",
+      "description": "Please feel free to reach out to me anytime!\n",
+      "author": [],
+      "date": "`r Sys.Date()`",
+      "contents": "\n\n\n\nTelephone & Email\nTEL: +1 (901)-448-1805\nEmail: pkim11@uthsc.edu\nAddress & Location\nUTHSC Translational Research Science Building 71\nS Manassas St, Memphis, TN 38103\n\n\n\n\n\n",
+      "last_modified": "2023-01-11T03:16:16-06:00"
     },
     {
       "path": "index.html",
-      "title": "Distilled Noodle",
+      "title": "Distilled Child",
       "author": [],
-      "contents": "\n\n          \n          \n          distilled-website\n          \n          \n          Home\n          About\n          ☰\n          \n          \n      \n        \n          \n            \n              \n            \n              Distilled Noodle\n            \n            \n              \n                \n                    \n                      \n                        LinkedIn\n                      \n                    \n                  \n                                    \n                    \n                      \n                        Twitter\n                      \n                    \n                  \n                                    \n                    \n                      \n                        GitHub\n                      \n                    \n                  \n                                    \n                    \n                      \n                        Email\n                      \n                    \n                  \n                                  \n            \n          \n        \n        \n        \n          \n            \n            Bio\n            Frank Hermosillo studies neural networks and their\n            applications at Google Brain. His research focuses on\n            differentiable network pruning approximation and\n            decentralized gradient inversion mechanics. He frequently\n            collaborates with researchers who study machine learning,\n            computer vision, and cognitive science. His work has been\n            featured in WIRED, The Atlantic, Newsweek, and The New York\n            Times Magazine.\n            \n            \n            Education\n            Massachusetts Institute of Technology |\n            Cambridge, MA\n            Ph.D. in Computer Science | September 2009 - May 2014\n            The University of California, Berkeley |\n            Berkeley, CA\n            B.S. in Computer Science | September 2005 - May 2009\n            \n            \n            Experience\n            Google Brain | Principal Investigator |\n            January 2018 - Present\n            Netflix | Research Scientist | June 2014\n            - December 2017\n            \n          \n        \n      \n    \n\n    \n      \n        \n          \n            \n              \n            \n              Distilled Noodle\n            \n            \n              \n                \n                                    \n                    \n                      LinkedIn\n                    \n                  \n                                    \n                    \n                      Twitter\n                    \n                  \n                                    \n                    \n                      GitHub\n                    \n                  \n                                    \n                    \n                      Email\n                    \n                  \n                                  \n              \n            \n            \n              \n              Bio\n              Frank Hermosillo studies neural networks and their\n              applications at Google Brain. His research focuses on\n              differentiable network pruning approximation and\n              decentralized gradient inversion mechanics. He frequently\n              collaborates with researchers who study machine learning,\n              computer vision, and cognitive science. His work has been\n              featured in WIRED, The Atlantic, Newsweek, and The New\n              York Times Magazine.\n              \n              \n              Education\n              Massachusetts Institute of Technology\n              | Cambridge, MA\n              Ph.D. in Computer Science | September 2009 - May\n              2014\n              The University of California, Berkeley\n              | Berkeley, CA\n              B.S. in Computer Science | September 2005 - May\n              2009\n              \n              \n              Experience\n              Google Brain | Principal Investigator\n              | January 2018 - Present\n              Netflix | Research Scientist | June\n              2014 - December 2017\n              \n            \n        \n      \n    \n\n    \n    \n    ",
-      "last_modified": "2023-01-07T01:53:26-06:00"
+      "contents": "\n\n          \n          \n          Distilled Child\n          \n          \n          About\n          Report\n          \n          \n          Research\n           \n          ▾\n          \n          \n          RCC\n          Hi-C\n          Genome Assembly\n          SV Calling\n          \n          \n          Contact\n          ☰\n          \n          \n      \n        \n          \n            \n              \n            \n              Distilled Child\n            \n            \n              \n                \n                    \n                      \n                         Twitter\n                      \n                    \n                  \n                                    \n                    \n                      \n                         Github\n                      \n                    \n                  \n                                    \n                    \n                      \n                         email\n                      \n                    \n                  \n                                  \n            \n          \n        \n        \n        \n          \n            \n            Hola!\n            Sorry. I cannot Spanish at all, but I wanted to make this\n            webpage look lit with the quirky phrase, Distilled\n            Child. This webpage was building using Distill, and I\n            was looking for a child attribute value when programming\n            something, so I ended up mingle both. Anyway, I hope you\n            enjoy the website. As of now (01/11/2023), Only here and\n            contact pages are done.\n            \n          \n        \n      \n    \n\n    \n      \n        \n          \n            \n              \n            \n              Distilled Child\n            \n            \n              \n                \n                                    \n                    \n                       Twitter\n                    \n                  \n                                    \n                    \n                       Github\n                    \n                  \n                                    \n                    \n                       email\n                    \n                  \n                                  \n              \n            \n            \n              \n              Hola!\n              Sorry. I cannot Spanish at all, but I wanted to make\n              this webpage look lit with the quirky phrase,\n              Distilled Child. This webpage was\n              building using Distill, and\n              I was looking for a child attribute value when programming\n              something, so I ended up mingle both. Anyway, I hope you\n              enjoy the website. As of now (01/11/2023), Only here and\n              contact pages are done.\n              \n            \n        \n      \n    \n\n    \n    \n    ",
+      "last_modified": "2023-01-11T03:16:19-06:00"
+    },
+    {
+      "path": "research.html",
+      "title": "Untitled",
+      "description": "A new article created using the Distill format.\n",
+      "author": [
+        {
+          "name": "Nora Jones",
+          "url": "https://example.com/norajones"
+        }
+      ],
+      "date": "`r Sys.Date()`",
+      "contents": "\nDistill is a publication format for scientific and technical writing, native to the web.\nLearn more about using Distill for R Markdown at https://rstudio.github.io/distill.\n\n\n\n",
+      "last_modified": "2023-01-11T03:16:20-06:00"
+    },
+    {
+      "path": "test2.html",
+      "title": "test2",
+      "description": "A new article created using the Distill format.\n",
+      "author": [
+        {
+          "name": "Nora Jones",
+          "url": "https://example.com/norajones"
+        }
+      ],
+      "date": "`r Sys.Date()`",
+      "contents": "\nDistill is a publication format for scientific and technical writing, native to the web. sdasefasfasd\nLearn more about using Distill for R Markdown at https://rstudio.github.io/distill.\n\n\n\n",
+      "last_modified": "2023-01-11T03:16:20-06:00"
+    },
+    {
+      "path": "test3.html",
+      "title": "test3",
+      "description": "A new article created using the Distill format.\n",
+      "author": [
+        {
+          "name": "Nora Jones",
+          "url": "https://example.com/norajones"
+        }
+      ],
+      "date": "`r Sys.Date()`",
+      "contents": "\nDistill is a publication format for scientific and technical writing, native to the web. 33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333\nLearn more about using Distill for R Markdown at https://rstudio.github.io/distill.\n\n\n\n",
+      "last_modified": "2023-01-11T03:16:20-06:00"
     }
   ],
   "collections": []

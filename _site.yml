@@ -1,12 +1,26 @@
-name: "."
-title: "distilled-website"
+name: "Distilled Child"
+title: "Distilled Child"
 description: |
-  distilled-website
+  Personal website using distill
 output_dir: "docs"
+theme: "distilled-child-theme.css"
+favicon: images/favicon.png
 navbar:
   right:
-    - text: "Home"
-      href: index.html
     - text: "About"
       href: about.html
+    - text: "Report"
+      href: report.html
+    - text: "Research"
+      menu:
+      - text: "RCC"
+        href: rcc.html
+      - text: "Hi-C"    
+        href: hic_analysis.html
+      - text: "Genome Assembly"    
+        href: genome_assembly.html
+      - text: "SV Calling"    
+        href: sv_calling.html
+    - text: "Contact"
+      href: contact.html
 output: distill::distill_article

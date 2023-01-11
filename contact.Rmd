@@ -1,0 +1,25 @@
+---
+title: "Contact"
+description: |
+  Please feel free to reach out to me anytime!
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+<div style="text-align: left">
+<img src="images/contact1.jpg" width="600px" min-width="600px" max-width="450px" />
+</div>
+
+## Telephone & Email
+TEL: +1 (901)-448-1805  
+Email: pkim11@uthsc.edu
+
+## Address & Location
+UTHSC Translational Research Science Building 71  
+S Manassas St, Memphis, TN 38103
+
+<iframe width="500" height="400" style="border:0" loading="lazy" allowfullscreen src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJhb8RwmJ-1YcR5cXZM7yKaBA&key=AIzaSyDYuE3eZSkVHGitwe6VhLxEjo3b5pKTcqY"></iframe>
